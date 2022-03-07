@@ -1,0 +1,111 @@
+.squares {
+    width: 71px;
+    height: 71px;
+
+    background: #FFD1E7;
+    border: 5px solid rgba(0, 0, 0, 0.38);
+    box-sizing: border-box;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 2.5s ease-in-out;
+}
+
+.letters{
+    font-family: Arial;
+    font-size: 2em;
+    font-weight: bolder;
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.active{
+    border: 5px solid #FFABD4;
+}
+
+.animation{
+    animation: entered ease-in-out 0.5s;
+}
+
+.correct {
+    animation: flipCorrect ease-in-out forwards 1000ms;
+}
+.includes {
+    animation: flipIncludes ease-in-out forwards 1000ms;
+
+}
+.not {
+    animation: flipNot ease-in-out forwards 1000ms;
+
+}
+
+.correct .letters, .not .letters, .includes .letters{
+    color: white;
+}
+
+
+@keyframes entered{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(0.95)
+    }
+    100%{
+        transform: scale(1)
+    }
+}
+
+@keyframes flipCorrect{
+    0%{
+        transform: rotateX(0deg);
+        background: #FFD1E7;
+    }
+    50%{
+        transform: rotateX(90deg);
+        background: #FFD1E7;
+    }
+    50.1%{
+        background: #72c06b;
+    }
+    100%{
+        transform: rotateX(0);
+        background: #72c06b;
+    }
+}
+
+@keyframes flipIncludes {
+    0%{
+        transform: rotateX(0deg);
+        background: #FFD1E7;
+    }
+    50%{
+        transform: rotateX(90deg);
+        background: #FFD1E7;
+    }
+    50.1%{
+        background: #e7d52f;
+    }
+    100%{
+        transform: rotateX(0);
+        background: #e7d52f;
+    }
+}
+
+@keyframes flipNot {
+    0%{
+        transform: rotateX(0deg);
+        background: #FFD1E7;
+    }
+    50%{
+        transform: rotateX(90deg);
+        background: #FFD1E7;
+    }
+    50.1%{
+        background: #ff9ccc;
+    }
+    100%{
+        transform: rotateX(0);
+        background: #ff9ccc;
+    }
+}
