@@ -2,13 +2,16 @@ import './app.css'
 import Title from './Components/Title'
 import GuessGrid from './Components/GuessGrid';
 import Keyboard from './Components/Keyboard';
-import { validWords } from './words/All_Words';
+import { validWords, allWords } from './words/All_Words';
 import { useState, useEffect } from 'react';
+import AlertContainer from './Components/AlertContainer';
 function App() {
   const GUESS_ROWS = 6;
   const GUESS_COLUMNS = 4;
   const REVEAL_TIME = 500;
 
+  const [alert, setAlert] = useState({})
+  const [wiggle, setWiggle] = useState('')
   const [guess, setGuess] = useState('')
   const [completeGuess, setCompleteGuess] = useState([])
   const [revealed, setRevealed] = useState(false)
@@ -18,33 +21,35 @@ function App() {
 
   useEffect(() => {
 
-    const setLocalStorage = (prop) => {
-      localStorage.setItem("game", JSON.stringify({
-        ...JSON.parse(localStorage.getItem("game")),
-        ...prop
-      }))
-    }
-
     if (isWin) {
       console.log("won")
-      setLocalStorage({"won": true})
-      return
     }
     else if (isLost) {
       console.log("lost")
-      setLocalStorage({"lose": true})
-      return
     }
+    
   }, [isWin, isLost])
 
 
   useEffect(() => {
-    const todayOffset = Math.floor((Date.now() - new Date(2022, 2, 6)) / 1000 / 60 / 60 / 24)
+    const todayOffset = Math.floor((Date.now() - new Date(2022, 2, 8)) / 1000 / 60 / 60 / 24)
     setWord(validWords[todayOffset])
     const storageGame = JSON.parse(localStorage.getItem("game"))
-    if(!(new Date().setHours(0, 0, 0, 0) === storageGame["timestamp"]) || !storageGame ){
+    const stats = localStorage.getItem("stats")
+    if(!stats){
+      localStorage.setItem("stats", JSON.stringify([]))
+    }
+    if(!storageGame){
+      localStorage.setItem("game", JSON.stringify({
+        "timestamp": new Date().setHours(0, 0, 0, 0)
+      }))
+      return
+    }
+    if(!(new Date().setHours(0, 0, 0, 0) === storageGame["timestamp"])){
         localStorage.setItem("game", JSON.stringify({
         ...storageGame,
+        "won": false,
+        "lose": false,
         "timestamp": new Date().setHours(0, 0, 0, 0)
       }))
       return
@@ -102,6 +107,27 @@ function App() {
     return letterStatus
   }
 
+  const setLocalStorageStats = () => {
+    localStorage.setItem("stats", JSON.stringify([
+      ...JSON.parse(localStorage.getItem("stats")),
+      JSON.parse(localStorage.getItem("game"))
+    ]))
+  }
+
+  const setLocalStorage = (prop) => {
+    localStorage.setItem("game", JSON.stringify({
+      ...JSON.parse(localStorage.getItem("game")),
+      ...prop
+    }))
+  }
+
+  const handleWiggle = () => {
+    setWiggle('wiggle')
+    setTimeout(() => {
+      setWiggle('')
+    }, 250);
+  }
+
   const onChar = (key) => {
     if (guess.length + 1 > GUESS_COLUMNS) return
     if (!key.toUpperCase().match(/^[A-Z]$/)) return
@@ -116,11 +142,33 @@ function App() {
   const onEnter = () => {
     if (isWin || isLost) return
     if (guess.length !== GUESS_COLUMNS) return
+    if(!allWords.includes(guess)) {
+      handleWiggle()
+      setAlert({
+        message: "Not a word in our dictionary",
+        duration: 1500
+        })
+      return 
+    }
     if (guess === word) {
       setIsWin(true)
+      setLocalStorage({"won": true})
+      setLocalStorageStats()
+      setTimeout(() => {
+        setAlert({
+          "message": "Nice!"
+        })
+      }, REVEAL_TIME * GUESS_COLUMNS);
     }
     else if (completeGuess.length + 1 === GUESS_ROWS) {
       setIsLost(true)
+      setLocalStorage({"lose": true})
+      setLocalStorageStats()
+      setTimeout(() => {
+        setAlert({
+          "message": `Word was ${word}`
+        })
+      }, REVEAL_TIME * GUESS_COLUMNS);
     }
     setCompleteGuess([...completeGuess, guess])
     setGuess('')
@@ -141,6 +189,7 @@ function App() {
         checkLetters={checkLetters}
         revealTime={REVEAL_TIME}
         isWin={isWin}
+        wiggle={wiggle}
       />
       <Keyboard
         onChar={onChar}
@@ -150,6 +199,10 @@ function App() {
         checkGuesses={checkGuesses}
         completeGuess={completeGuess}
         revealTime={REVEAL_TIME * GUESS_COLUMNS}
+      />
+      <AlertContainer 
+        duration={alert.duration}
+        alert={alert}
       />
     </div>
   );

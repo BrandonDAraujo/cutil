@@ -3,14 +3,15 @@
     margin: 0;
     padding: 0;
 }
-
 .App{
-    height: 100vh;
+    height: 100%;
     width: 100%;
+    position: fixed;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
+
 
 body {
     background-color: #FFBFDE;

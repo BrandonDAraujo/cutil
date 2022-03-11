@@ -1,0 +1,6 @@
+.alertContainer{
+    position: absolute;
+    display: grid;
+    justify-content: center;
+    margin-top: 2em;
+}

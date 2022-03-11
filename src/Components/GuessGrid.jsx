@@ -5,7 +5,7 @@ import CompleteRow from './CompleteRow';
 import EmptyRow from './EmptyRow';
 
 
-function GuessGrid({ guess, guessRow, guessColumn, completeGuesses, checkLetters, revealTime}) {
+function GuessGrid({ guess, guessRow, guessColumn, completeGuesses, checkLetters, revealTime, wiggle}) {
   const guessArr = Array.from(guess.toUpperCase())
   const emptyRows = !(completeGuesses.length >= guessRow) ? [...Array(guessRow - 1 - completeGuesses.length)] : []
   return (
@@ -19,7 +19,7 @@ function GuessGrid({ guess, guessRow, guessColumn, completeGuesses, checkLetters
             revealTime={revealTime}
           />
         ))}
-        {completeGuesses.length < guessRow && <GuessRow guess={guessArr} guessColumn={guessColumn} />}
+        {completeGuesses.length < guessRow && <GuessRow guess={guessArr} guessColumn={guessColumn} wiggle={wiggle}/>}
         {emptyRows.map((_, i) => (
           <EmptyRow key={i} guessColumn={guessColumn} />
         ))}

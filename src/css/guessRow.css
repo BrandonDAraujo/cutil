@@ -3,3 +3,23 @@
     flex-direction: row;
     gap: 1em;
 }
+
+.wiggle{
+    animation: wiggle ease-in-out 250ms;
+}
+
+@keyframes wiggle{
+    0%{
+        transform: translateX(0%);
+    }
+    25%{
+        transform: translateX(5%);
+    }
+    75%{
+        transform: translateX(-5%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+
+}

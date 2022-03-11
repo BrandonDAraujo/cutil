@@ -4,9 +4,11 @@
     flex-direction: column;
     row-gap: 0.5em;
     flex-grow: 1;
+    width: 95%;
 }
 
 .keyboard-row{
+    width: 100%;
     display: flex;
     justify-content: center;
     column-gap: 0.5em;
