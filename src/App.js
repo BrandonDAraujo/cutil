@@ -5,6 +5,7 @@ import Keyboard from './Components/Keyboard';
 import { validWords, allWords } from './words/All_Words';
 import { useState, useEffect } from 'react';
 import AlertContainer from './Components/AlertContainer';
+import StatsModal from './Components/StatsModal';
 function App() {
   const GUESS_ROWS = 6;
   const GUESS_COLUMNS = 4;
@@ -145,7 +146,7 @@ function App() {
     if(!allWords.includes(guess)) {
       handleWiggle()
       setAlert({
-        message: "Not a word in our dictionary",
+        message: "Not found in our word list",
         duration: 1500
         })
       return 
@@ -204,6 +205,7 @@ function App() {
         duration={alert.duration}
         alert={alert}
       />
+      <StatsModal />
     </div>
   );
 }
