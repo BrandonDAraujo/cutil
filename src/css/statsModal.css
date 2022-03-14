@@ -1,0 +1,86 @@
+.statsModal{
+    position: absolute;
+    width: 95%;
+    max-width: 64.9vh;
+    height: 60.5vh;
+    background: #FFBFDE;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5.2vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    font-family: Roboto;
+}
+
+.numberStats{
+    display: flex;
+    position: absolute;
+    top: 9.3vh;
+    gap: 5.1vh; /*change to vh*/
+    font-weight: bold;
+    font-size: 3.2vh;
+}
+
+.gamesContainer, .winRateContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gamesStats, .winRateStats{
+    color: white;
+}
+.games, .winRate{
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.graphContainer{
+    display: flex;
+    position: absolute;
+    bottom: 0%;
+    height: 50%;
+    gap: 4.5vh;
+}
+.statLine{
+    bottom: 0%;
+    color: rgba(0, 0, 0, 0.38);
+    font-family: Roboto;
+    font-size: 3.2vh;
+    font-weight: bold;
+    height: 55%;
+}
+
+.line{
+    background: white;
+    width: 100%;
+    border-radius: 0.3vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.inlineNumber {
+    font-size: 1.2vh;
+    font-weight: normal;
+    bottom: 0%;
+    position: absolute;
+}
+
+.shareButton{
+    width: 24.8vh;
+    height: 5.4vh;
+    background: #FF9CCC;
+    border-radius: 1.4vh;
+    outline: none;
+    border: none;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    color: white;
+    font-family: Roboto;
+    font-size: 3.7vh;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    bottom: 5%;
+    z-index: 3;
+}

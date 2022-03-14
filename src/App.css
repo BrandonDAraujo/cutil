@@ -20,3 +20,25 @@ body {
     display: grid;
     justify-content: center;
 }
+
+.statsButton{
+    position: absolute;
+    width: 63px;
+    height: 63px;
+    background: #FF9CCC;
+    border-radius: 10px;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    outline: none;
+    border: none;
+    right: 0%;
+    margin: 15px;
+    cursor: pointer;
+    color: white;
+}
+
+.modalBackground{
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.29);
+}

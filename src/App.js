@@ -5,12 +5,12 @@ import Keyboard from './Components/Keyboard';
 import { validWords, allWords } from './words/All_Words';
 import { useState, useEffect } from 'react';
 import AlertContainer from './Components/AlertContainer';
-import StatsModal from './Components/StatsModal';
+import StatsContainer from './Components/StatsContainer';
 function App() {
   const GUESS_ROWS = 6;
   const GUESS_COLUMNS = 4;
   const REVEAL_TIME = 500;
-
+  
   const [alert, setAlert] = useState({})
   const [wiggle, setWiggle] = useState('')
   const [guess, setGuess] = useState('')
@@ -19,6 +19,8 @@ function App() {
   const [isWin, setIsWin] = useState(false)
   const [isLost, setIsLost] = useState(false)
   const [word, setWord] = useState("")
+  const [modal, setModal] = useState(false)
+  const todayOffset = Math.floor((Date.now() - new Date(2022, 2, 9)) / 1000 / 60 / 60 / 24)
 
   useEffect(() => {
 
@@ -33,7 +35,6 @@ function App() {
 
 
   useEffect(() => {
-    const todayOffset = Math.floor((Date.now() - new Date(2022, 2, 8)) / 1000 / 60 / 60 / 24)
     setWord(validWords[todayOffset])
     const storageGame = JSON.parse(localStorage.getItem("game"))
     const stats = localStorage.getItem("stats")
@@ -61,7 +62,7 @@ function App() {
     } else if (storageGame["lose"]) {
       setIsLost(true)
     }
-  }, [])
+  }, [todayOffset])
 
   useEffect(() => {
     localStorage.setItem("game", JSON.stringify({
@@ -178,6 +179,9 @@ function App() {
       setRevealed(false)
     }, REVEAL_TIME * GUESS_COLUMNS)
   }
+  const openModal = () => {
+    setModal(!modal)
+  }
 
   return (
     <div className="App">
@@ -205,7 +209,16 @@ function App() {
         duration={alert.duration}
         alert={alert}
       />
-      <StatsModal />
+      <StatsContainer
+      modal={modal} 
+      openModal={openModal} 
+      GUESS_ROWS={GUESS_ROWS} 
+      todayOffset={todayOffset} 
+      setAlert={setAlert} 
+      isLost={isLost} 
+      isWin={isWin} 
+      checkLetters={checkLetters} 
+      completeGuess={completeGuess}/>
     </div>
   );
 }
