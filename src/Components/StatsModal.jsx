@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import '../css/statsModal.css'
+import { Transition } from 'react-transition-group'
 
-function StatsModal({ rows, gameFinished, checkLetters, guesses, setAlert, todayOffset}) {
+function StatsModal({ rows, gameFinished, checkLetters, guesses, setAlert, todayOffset, modal}) {
     const stats = JSON.parse(localStorage.getItem("stats"))
     const games = stats && stats.length
     const winsArray = stats && stats.filter(item => (
@@ -10,6 +11,21 @@ function StatsModal({ rows, gameFinished, checkLetters, guesses, setAlert, today
     const wins = stats && winsArray.length
     const winRate = (wins / games) ? Math.floor((wins / games) * 100) : 0
     const winObject = {}
+    const duration = 300
+    const nodeRef = useRef(null)
+    const defaultStyle = {
+        transition: `all ${duration}ms ease-in-out`,
+        transform: "translateY(-60%)",
+        opacity: 0,
+        pointerEvents: "none"
+    }
+
+    const transitionStyles = {
+        entering: { opacity: 1, transform: "translateY(-50%)" },
+        entered: { opacity: 1, transform: "translateY(-50%)", pointerEvents: "all"},
+        exiting: { opacity: 0 },
+        exited: { opacity: 0 },
+    };
 
 
     winsArray && winsArray.forEach(e => {
@@ -61,7 +77,9 @@ function StatsModal({ rows, gameFinished, checkLetters, guesses, setAlert, today
     }
 
     return (
-        <div className="statsModal">
+        <Transition in={modal} timeout={duration} nodeRef={nodeRef}>
+            {state => (
+        <div className="statsModal" ref={nodeRef} style={{ ...defaultStyle, ...transitionStyles[state] }}>
             <div className="numberStats">
                 <div className="gamesContainer">
                     <div className="gamesStats">
@@ -94,6 +112,8 @@ function StatsModal({ rows, gameFinished, checkLetters, guesses, setAlert, today
                 ))}
             </div>
         </div>
+            )}
+        </Transition>
     )
 }
 

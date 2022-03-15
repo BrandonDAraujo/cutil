@@ -1,6 +1,7 @@
 .Title{
-    font-size: 88px;
-    font-family: Affection;
+    font-size: 9vh;
+    font-family: Varela Round;
+    font-weight: bold;
     display: flex;
     justify-content: center;
     letter-spacing: 0.145em;

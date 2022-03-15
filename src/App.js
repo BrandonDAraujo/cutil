@@ -20,7 +20,7 @@ function App() {
   const [isLost, setIsLost] = useState(false)
   const [word, setWord] = useState("")
   const [modal, setModal] = useState(false)
-  const todayOffset = Math.floor((Date.now() - new Date(2022, 2, 9)) / 1000 / 60 / 60 / 24)
+  const todayOffset = Math.floor((Date.now() - new Date(2022, 2, 14)) / 1000 / 60 / 60 / 24)
 
   useEffect(() => {
 
